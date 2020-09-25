@@ -3,24 +3,25 @@
 [![APLv2][license-badge]][license]
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcytle%2Freact-docgen-typescript-markdown-render%2Fbadge&style=flat)](https://actions-badge.atrox.dev/cytle/react-docgen-typescript-markdown-render/goto)
 
-
 # react-docgen-typescript-markdown-render
 
-[remark](https://github.com/remarkjs/remark) plugin to transform React component to Markdown by  [`react-docgen-typescript`](https://github.com/styleguidist/react-docgen-typescript)
+Markdown render for [`react-docgen-typescript`](https://github.com/styleguidist/react-docgen-typescript)
 
 ## Getting Started
 
 ``` sh
-yarn add -D react-docgen-typescript-markdown-render
+yarn add react-docgen-typescript-markdown-render
 ```
 
 ``` ts
-import * as remark from 'remark';
-import * as reactDocgenTypescript from 'react-docgen-typescript-markdown-render';
-import * as vfile from 'to-vfile';
+import { markdownRender } from 'react-docgen-typescript-markdown-render';
+import * as path from 'path';
+import { parse } from 'react-docgen-typescript';
 
-const doc = vfile.readSync('README.md');
-console.log(remark().use(reactDocgenTypescript).processSync(doc).contents);
+const componentDocs = parse('Column.tsx', {
+  savePropValueAsString: true,
+})
+console.log(markdownRender(componentDocs));
 ```
 
 The Component [`Column.tsx`](./__tests__/components/Column/Column.tsx)
@@ -55,23 +56,9 @@ export class Column extends Component<IColumnProps> {
 }
 ```
 
-Convert the following Markdown:
-
-``` markdown
-# foo-components
-
-## API
-
-[Column](./Column.tsx "react-docgen-typescript:")
-```
-
 Into
 
 ``` markdown
-# foo-components
-
-## API
-
 ### Column
 
 Form column.
@@ -84,46 +71,6 @@ Form column.
 | **prop2** | prop2 description      | `number`                            | null    | :white_check_mark:            |
 | **prop3** | prop3 description      | `() => void`                        | null    | :white_check_mark:            |
 | **prop4** | prop4 description 中文 | `"option1" | "option2" | "option3"` | null    | :white_check_mark:            |
-```
-
-## Options
-
-### `remark().use(reactDocgenTypescript[, options])`
-
-#### render
-
-Custom document rendering
-
-``` ts
-import * as remark from 'remark';
-import * as reactDocgenTypescript from 'react-docgen-typescript-markdown-render';
-import { ReactDocgenTypescriptRender } from 'react-docgen-typescript-markdown-render/build/types';
-import * as vfile from 'to-vfile';
-import * as stringWidth from 'string-width';
-
-const tableRender = (componentDoc: ComponentDoc): Table => mdastTableBuilder([
-  ['属性', '描述', '类型', '默认值'],
-  ...Object.values(componentDoc.props).map((vo) =>
-    [
-      u('strong', [u('text', vo.name)]),
-      vo.description,
-      u('inlineCode', vo.type.name),
-      vo.defaultValue ? vo.defaultValue.value : '-',
-    ]
-  )
-]);
-
-const render: ReactDocgenTypescriptRender = (docs) => u('root', docs.map(vo => tableRender(vo)));;
-
-const doc = vfile.readSync('README.md');
-
-const { contents } = remark()
-  .use({
-    settings: { stringLength: stringWidth }
-  })
-  .use(reactDocgenTypescript, { render })
-  .processSync(doc);
-console.log(contents);
 ```
 
 ## License
