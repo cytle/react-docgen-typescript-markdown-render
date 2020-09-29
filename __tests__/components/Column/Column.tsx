@@ -22,6 +22,10 @@ export interface IColumnProps {
 
 /**
  * Form column.
+ * @example sad
+ * ``` ts
+ * console.log(Column)
+ * ```
  */
 export class Column extends Component<IColumnProps> {
   render() {
