@@ -1,36 +1,28 @@
-import * as u from 'unist-builder';
-import { AlignType, Table, TableCell, PhrasingContent } from 'mdast';
+import { AlignType } from 'mdast';
+import { Parent } from "unist";
+import { tableCell, tableRow, table, text, Children } from 'mdast-builder';
 
-export type TableCellContent = string | PhrasingContent[];
-
-const table = (
-  rows: Array<Array<TableCellContent>>,
-  align?: AlignType[]
-): Table => u(
-  'table',
-  { align },
-
-  rows.map(row => u(
-    'tableRow',
-    row.map<TableCell>(vo => {
-      if (typeof vo === 'string') {
-        return u('tableCell', [u('text', vo)]);
-      }
-      return u('tableCell', vo);
-    })
-  ))
-);
+export type TableCellContent = string | Children;
 
 export interface TableColumn<Item> {
-  title: string;
+  title: TableCellContent;
   render: (row: Item, index: number, dataSource: Item[]) => TableCellContent;
-  alignType?: AlignType
+  alignType?: AlignType;
 }
-
-export const tableMdastBuilder = <Item = unknown>(dataSource: Item[], columns: TableColumn<Item>[]): Table =>
-  table([
-    columns.map(vo => vo.title),
-    ...dataSource.map((item, index) =>
-      columns.map(vo => vo.render(item, index, dataSource))
-    )
-  ], columns.map(vo => vo.alignType));
+const tableCellContentToNode = (content: TableCellContent) =>
+  typeof content === 'string' ? text(content) : content;
+export const tableMdastBuilder = <Item = unknown>(
+  dataSource: Item[],
+  columns: Array<TableColumn<Item>>
+): Parent =>
+  table(
+    columns.map((vo) => vo.alignType),
+    [
+      columns.map((vo) => tableCell(tableCellContentToNode(vo.title))),
+      ...dataSource.map((item, index) =>
+        columns.map((vo) =>
+          tableCell(tableCellContentToNode(vo.render(item, index, dataSource)))
+        )
+      ),
+    ].map((vo) => tableRow(vo))
+  );
