@@ -25,8 +25,8 @@ import * as path from 'path';
  */
 export const fluentuiRenderer: ComponentDocRenderer = (componentDoc, { language } = {}) => {
   const { __ } = y18n({
-    locale: language,
-    directory: path.resolve(__dirname, 'locales'),
+    locale: language || 'en_US',
+    directory: path.resolve(__dirname , '..', '..', '..', 'locales', 'fluentuiRenderer'),
   });
   return [
     heading(3, text(componentDoc.displayName)),

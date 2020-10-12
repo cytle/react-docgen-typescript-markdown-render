@@ -31,8 +31,8 @@ const isEnumType = (type: PropItemType): type is PropItemEnumType =>
  */
 export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { language } = {}) => {
   const { __ } = y18n({
-    locale: language,
-    directory: path.resolve(__dirname, 'locales'),
+    locale: language || 'en_US',
+    directory: path.resolve(__dirname , '..', '..', '..', 'locales', 'aliMaterialRenderer'),
   });
   return [
     heading(3, text(componentDoc.displayName)),
