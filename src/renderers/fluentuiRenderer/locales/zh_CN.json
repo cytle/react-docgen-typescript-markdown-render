@@ -1,0 +1,7 @@
+{
+  "Name": "属性名",
+  "Type": "类型",
+  "Default value": "默认值",
+  "Description": "说明",
+  "required": "必填"
+}

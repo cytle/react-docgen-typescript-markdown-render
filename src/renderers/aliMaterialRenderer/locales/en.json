@@ -1,0 +1,8 @@
+{
+  "Param": "Param",
+  "Description": "Description",
+  "Type": "Type",
+  "Enum": "Enum",
+  "Default": "Default",
+  "required": "required"
+}

@@ -5,9 +5,9 @@ import * as remarkStringify from 'remark-stringify';
 export interface RendererOptions {
   /**
    * language
-   * @default "en-US"
+   * @default "en_US"
    */
-  language?: 'zh-CN' | 'en-US';
+  language?: 'zh_CN' | 'en_US';
 }
 
 export interface MarkdownRenderOptions extends RendererOptions {

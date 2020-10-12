@@ -1,0 +1,8 @@
+{
+  "Param": "参数",
+  "Description": "说明",
+  "Type": "类型",
+  "Enum": "可选值",
+  "Default": "默认值",
+  "required": "必填"
+}

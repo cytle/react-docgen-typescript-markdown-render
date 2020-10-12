@@ -17,12 +17,12 @@ export const componentDocsMdastBuilder = (
 
 export const markdownRender = (
   docs: ComponentDoc[],
-  options: MarkdownRenderOptions = {}
+  { remarkStringify: remarkStringifyOptions, renderer, ...options }: MarkdownRenderOptions = {}
 ): string => unified()
   .use(
     remarkStringify,
-    { stringLength: stringWidth, ...options.remarkStringify },
+    { stringLength: stringWidth, ...remarkStringifyOptions },
   )
   .stringify(
-    root(componentDocsMdastBuilder(docs, options.renderer)),
+    root(componentDocsMdastBuilder(docs, renderer, options)),
   );
