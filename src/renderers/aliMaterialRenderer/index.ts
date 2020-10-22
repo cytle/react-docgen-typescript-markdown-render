@@ -33,7 +33,7 @@ const isBlackEnumType = (type: PropItemType) =>
  * | prop4 _(required)_ | prop4 description 中文   | `"option1" | "option2" | "option3"` | "option1", "option2", "option3" |         |
  * ```
  */
-export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { language } = {}) => {
+export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { language }) => {
   const { __ } = y18n({
     locale: language || 'en_US',
     directory: path.resolve(__dirname , '..', '..', '..', 'locales', 'aliMaterialRenderer'),
@@ -67,7 +67,7 @@ export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { langua
       },
       {
         title: __('Default'),
-        render: (vo) => vo.defaultValue?.value || '',
+        render: (vo) => vo.defaultValue?.value,
       },
     ]),
   ];

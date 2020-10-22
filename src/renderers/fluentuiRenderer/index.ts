@@ -23,7 +23,7 @@ import * as path from 'path';
  * | prop4 _(required)_ | "option1" \| "option2" \| "option3" |               | prop4 description 中文   |
  * ```
  */
-export const fluentuiRenderer: ComponentDocRenderer = (componentDoc, { language } = {}) => {
+export const fluentuiRenderer: ComponentDocRenderer = (componentDoc, { language }) => {
   const { __ } = y18n({
     locale: language || 'en_US',
     directory: path.resolve(__dirname , '..', '..', '..', 'locales', 'fluentuiRenderer'),
@@ -46,7 +46,7 @@ export const fluentuiRenderer: ComponentDocRenderer = (componentDoc, { language 
       },
       {
         title: __('Default value'),
-        render: (vo) => vo.defaultValue?.value || '',
+        render: (vo) => vo.defaultValue?.value,
       },
       {
         title: __('Description'),

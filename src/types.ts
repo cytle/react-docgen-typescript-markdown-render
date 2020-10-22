@@ -18,4 +18,4 @@ export interface MarkdownRenderOptions extends RendererOptions {
   remarkStringify?: remarkStringify.PartialRemarkStringifyOptions;
 }
 
-export type ComponentDocRenderer = (doc: ComponentDoc, options?: RendererOptions) => Node[];
+export type ComponentDocRenderer = (doc: ComponentDoc, options: RendererOptions) => Node[];
