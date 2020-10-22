@@ -12,6 +12,10 @@ interface PropItemEnumType extends PropItemType {
 const isEnumType = (type: PropItemType): type is PropItemEnumType =>
   type.name === 'enum' && Array.isArray(type.value);
 
+const blackEnumTypeList = ['boolean', 'RaxNode', 'ReactNode'];
+const isBlackEnumType = (type: PropItemType) =>
+  blackEnumTypeList.includes(type.raw);
+
 /**
  * alibaba materials style renderer
  * @see https://yuque.antfin-inc.com/mo/spec/spec-materials#CZiWi
@@ -57,7 +61,9 @@ export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { langua
       {
         title: __('Enum'),
         render: (vo) =>
-          isEnumType(vo.type) ? vo.type.value.map((e) => e.value).join(', ') : '',
+          isEnumType(vo.type) && !isBlackEnumType(vo.type)
+            ? vo.type.value.map((e) => e.value).join(', ')
+            : '',
       },
       {
         title: __('Default'),
