@@ -1,6 +1,6 @@
 import { PropItemType } from 'react-docgen-typescript';
 import { tableMdastBuilder } from '../../tableMdastBuilder';
-import { emphasis, heading, inlineCode, text } from 'mdast-builder';
+import { emphasis, heading, text } from 'mdast-builder';
 import { ComponentDocRenderer } from '../../types';
 import * as y18n from 'y18n';
 import * as path from 'path';
@@ -22,15 +22,15 @@ const isBlackEnumType = (type: PropItemType) =>
  * @example
  * ``` md
  * ### Column
-
+ *
  * Form column.
-
+ *
  * | Param              | Description              | Type                                | Enum                            | Default |
  * | ------------------ | ------------------------ | ----------------------------------- | ------------------------------- | ------- |
- * | prop1              | prop1 description        | `string`                            |                                 | "red"   |
- * | prop2 _(required)_ | prop2 description        | `number`                            |                                 |         |
- * | prop3 _(required)_ | prop3 description a \| b | `() => void`                        |                                 |         |
- * | prop4 _(required)_ | prop4 description 中文   | `"option1" | "option2" | "option3"` | "option1", "option2", "option3" |         |
+ * | prop1              | prop1 description        | string                              |                                 | "red"   |
+ * | prop2 _(required)_ | prop2 description        | number                              |                                 |         |
+ * | prop3 _(required)_ | prop3 description a \| b | () => void                          |                                 |         |
+ * | prop4 _(required)_ | prop4 description 中文   | "option1" \| "option2" \| "option3" | "option1", "option2", "option3" |         |
  * ```
  */
 export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { language }) => {
@@ -56,7 +56,7 @@ export const aliMaterialRenderer: ComponentDocRenderer = (componentDoc, { langua
       {
         title: __('Type'),
         render: (vo) =>
-          inlineCode(isEnumType(vo.type) ? vo.type.raw : vo.type.name),
+          isEnumType(vo.type) ? vo.type.raw : vo.type.name,
       },
       {
         title: __('Enum'),
